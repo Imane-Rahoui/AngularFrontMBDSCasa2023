@@ -1,1 +1,4 @@
 /* CSS global à tout le HTML de l'application */
+
+html, body { height: 100%; }
+body { margin-left: 100; font-family: Roboto, "Helvetica Neue", sans-serif; }
