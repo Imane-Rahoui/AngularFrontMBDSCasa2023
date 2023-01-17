@@ -8,11 +8,13 @@ import { MatDividerModule } from '@angular/material/divider';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AssignmentsComponent } from './assignments/assignments.component';
+import { RenduDirective } from './shared/rendu.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AssignmentsComponent
+    AssignmentsComponent,
+    RenduDirective
   ],
   imports: [
     BrowserModule,

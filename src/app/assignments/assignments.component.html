@@ -3,10 +3,14 @@
 </button>
 
 <div *ngFor="let assignment of assignments"
-     [ngStyle]="{'color':assignment.rendu ? 'green' : 'red'}"
 >
-  <p>
+  <p appRendu *ngIf="assignment.rendu; else nonsoumis">
       Devoir intitulé {{assignment.nom}}, rendu le
                                 {{assignment.dateDeRendu}}.
   </p>
+  <ng-template #nonsoumis>
+    <p>{{assignment.nom}} non rendu, à rendre
+      le {{assignment.dateDeRendu}}
+    </p>
+  </ng-template>
 </div>
