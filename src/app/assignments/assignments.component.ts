@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./assignments.component.css']
 })
 export class AssignmentsComponent {
+
   assignments = [
     {
       nom: "Devoir Angular de Mr Buffa",
@@ -23,5 +24,4 @@ export class AssignmentsComponent {
       rendu : true
     }
   ];
-
 }

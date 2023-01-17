@@ -1,9 +1,12 @@
-<div *ngFor="let assignment of assignments">
-  <p *ngIf="assignment.rendu; else nonsoumis">
+<button mat-raised-button color="warn" >
+  Click me
+</button>
+
+<div *ngFor="let assignment of assignments"
+     [ngStyle]="{'color':assignment.rendu ? 'green' : 'red'}"
+>
+  <p>
       Devoir intitulé {{assignment.nom}}, rendu le
                                 {{assignment.dateDeRendu}}.
   </p>
-  <ng-template #nonsoumis>
-  Le devoir {{assignment.nom}} n'a pas été rendu.
-  </ng-template>
 </div>
