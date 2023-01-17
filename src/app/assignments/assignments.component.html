@@ -3,8 +3,12 @@
 >
 </app-add-assignment>
 
-<main *ngIf="!formVisible">
-  <button mat-raised-button color="primary" (click)="formVisible = true">
+<main *ngIf="!formVisible" class="container">
+  <button mat-raised-button
+          color="primary"
+          (click)="formVisible = true"
+          class="ajouterBtn"
+  >
     Ajouter Devoir
   </button>
 

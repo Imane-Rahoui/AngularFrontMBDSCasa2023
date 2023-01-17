@@ -11,7 +11,11 @@ export class AssignmentDetailComponent {
 
   onAssignmentRendu() {
     if(!this.assignmentTransmis) return;
-    
+
       this.assignmentTransmis.rendu = true;
+  }
+
+  onDelete() {
+    // On suppprime l'ass
   }
 }

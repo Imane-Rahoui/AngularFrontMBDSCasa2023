@@ -7,3 +7,11 @@
   background-color:yellow;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.ajouterBtn {
+  align-self: flex-end;
+}
