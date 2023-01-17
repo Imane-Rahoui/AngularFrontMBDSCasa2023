@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Assignment } from '../assignment.model';
 
 @Component({
   selector: 'app-assignment-detail',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./assignment-detail.component.css']
 })
 export class AssignmentDetailComponent {
+  @Input() assignmentTransmis?:Assignment=undefined;
 
+  onAssignmentRendu() {
+    if(!this.assignmentTransmis) return;
+    
+      this.assignmentTransmis.rendu = true;
+  }
 }

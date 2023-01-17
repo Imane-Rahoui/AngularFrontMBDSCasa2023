@@ -7,9 +7,9 @@ import { Assignment } from './assignment.model';
   styleUrls: ['./assignments.component.css']
 })
 export class AssignmentsComponent implements OnInit {
-  // champs de formulaire
-  nomDevoir="";
-  dateDeRendu?:Date=undefined;
+  formVisible=false;
+
+  assignmentSelectionne?:Assignment=undefined;
 
   ngOnInit() {
     console.log("AVANT AFFICHAGE");
@@ -38,16 +38,17 @@ export class AssignmentsComponent implements OnInit {
     }
   ];
 
-  onSubmit(event:any) {
-    console.log(this.nomDevoir + " date de rendu : " + this.dateDeRendu);
-    if((!this.nomDevoir) || (!this.dateDeRendu)) return;
+  assignmentClique(a:Assignment) {
+    console.log("On a cliqué sur :" + a.nom);
+    this.assignmentSelectionne = a;
+  }
 
-    const newAssignment = new Assignment();
-    newAssignment.nom = this.nomDevoir;
-    newAssignment.dateDeRendu = this.dateDeRendu;
-    newAssignment.rendu = false;
+  ajouterAssignment(a:Assignment) {
+    // On ajoute l'assignment envoyé par le fils
+    // dans le tableau des assignments
+    this.assignments.push(a);
 
-    this.assignments.push(newAssignment);
-
+    // On cache le formulaire et on affiche la liste
+    this.formVisible = false;
   }
 }
