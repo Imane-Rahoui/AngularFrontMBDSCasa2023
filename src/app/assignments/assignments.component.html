@@ -1,16 +1,37 @@
-<button mat-raised-button color="warn" >
-  Click me
-</button>
+<form ngForm (submit)="onSubmit($event)" #assignmentForm class="form">
+  <mat-form-field>
+    <input matInput placeholder="Nom" [(ngModel)]="nomDevoir" name="nom">
+  </mat-form-field>
 
-<div *ngFor="let assignment of assignments"
->
-  <p appRendu *ngIf="assignment.rendu; else nonsoumis">
-      Devoir intitulé {{assignment.nom}}, rendu le
-                                {{assignment.dateDeRendu}}.
-  </p>
-  <ng-template #nonsoumis>
-    <p>{{assignment.nom}} non rendu, à rendre
-      le {{assignment.dateDeRendu}}
+  <mat-form-field appearance="fill">
+    <mat-label>Date de Rendu</mat-label>
+
+    <input matInput [matDatepicker]="picker" [(ngModel)]="dateDeRendu" name="date">
+
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <button mat-stroked-button color="primary">
+    Ajouter un devoir
+  </button>
+</form>
+
+<mat-list *ngFor="let assignment of assignments">
+  <h3 matSubheader>Date de rendu : {{assignment.dateDeRendu}}</h3>
+  <mat-list-item>
+    <p appRendu *ngIf="assignment.rendu; else nonsoumis">
+      Devoir intitulé {{assignment.nom}} a été rendu.
     </p>
-  </ng-template>
-</div>
+    <ng-template #nonsoumis>
+      <p>{{assignment.nom}} n'a pas été rendu.</p>
+    </ng-template>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+
+</mat-list>
+
+
+
+<app-assignment-detail></app-assignment-detail>
