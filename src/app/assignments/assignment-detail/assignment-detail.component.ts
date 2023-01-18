@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentsService } from 'src/app/shared/assignments.service';
 import { Assignment } from '../assignment.model';
 
@@ -12,7 +12,8 @@ export class AssignmentDetailComponent implements OnInit {
   assignmentTransmis?: Assignment = undefined;
 
   constructor(private assignmentsService: AssignmentsService,
-              private activatedRoute:ActivatedRoute) {}
+              private activatedRoute:ActivatedRoute,
+              private router:Router) {}
 
   ngOnInit() {
     console.log('DETAILS AVANT AFFICHAGE');
@@ -23,6 +24,17 @@ export class AssignmentDetailComponent implements OnInit {
     const id = +this.activatedRoute.snapshot.params['id'];
     console.log("id = " + id);
     console.log("type de id : " + typeof(id));
+
+    // Juste pour montrer comment faire, je vais afficher les
+    // query params dans la console (ce qui suit le ? dans l'URL)
+    // ex : http://localhost:4200/assignments/1?
+    const queryParams = this.activatedRoute.snapshot.queryParams;
+    console.log(queryParams);
+
+    // ici pour récupérer les fragments (ce qui suit le # dans l'URL)
+    // ex : http://localhost:4200/assignments/1#fragment
+    const fragment = this.activatedRoute.snapshot.fragment;
+    console.log(fragment);
 
     // On demande au service de gestion des assignments
     // de nous fournir l'assignment correspondant à l'id
@@ -42,6 +54,10 @@ export class AssignmentDetailComponent implements OnInit {
       .updateAssignment(this.assignmentTransmis)
       .subscribe((message) => {
         console.log(message);
+
+        // on navigue vers la page d'accueil
+        let x = "toto"
+        this.router.navigate(['/home']);
       });
   }
 
@@ -58,6 +74,9 @@ export class AssignmentDetailComponent implements OnInit {
 
         // on cache le détail de l'assignment (car il y a un *ngIf)
         this.assignmentTransmis = undefined;
+
+        // on navigue vers la page d'accueil
+        this.router.navigate(['/home']);
       });
   }
 }

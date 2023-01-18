@@ -8,13 +8,17 @@
     </mat-card-subtitle>
 
     <mat-card-actions id="bottom">
-      <mat-checkbox *ngIf="!assignmentTransmis.rendu"
-                    (click)="onAssignmentRendu()"
-      >
+      <mat-checkbox *ngIf="!assignmentTransmis.rendu" (click)="onAssignmentRendu()">
         Devoir rendu
       </mat-checkbox>
-      <button mat-raised-button color="warn"
-             (click)="onDelete()">DELETE
+
+      <a routerLink="/assignments/{{assignmentTransmis.id}}/edit">
+        <button mat-raised-button color="primary">
+          EDIT
+        </button>
+      </a>
+
+      <button mat-raised-button color="warn" (click)="onDelete()">DELETE
       </button>
     </mat-card-actions>
   </mat-card-content>
