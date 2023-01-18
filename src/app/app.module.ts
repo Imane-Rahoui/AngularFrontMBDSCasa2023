@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { RouterModule, Route } from '@angular/router';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
@@ -19,6 +21,13 @@ import { RenduDirective } from './shared/rendu.directive';
 import { AssignmentDetailComponent } from './assignments/assignment-detail/assignment-detail.component';
 import { AddAssignmentComponent } from './assignments/add-assignment/add-assignment.component';
 
+const routes: Route[] = [
+  { path: '', component: AssignmentsComponent },
+  { path: 'home', component: AssignmentsComponent },
+  { path: 'add', component: AddAssignmentComponent },
+  { path: 'assignments/:id', component: AssignmentDetailComponent },
+];
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +38,7 @@ import { AddAssignmentComponent } from './assignments/add-assignment/add-assignm
   ],
   imports: [
     BrowserModule, FormsModule,
+    RouterModule.forRoot(routes),
     BrowserAnimationsModule, MatButtonModule, MatIconModule,
     MatDividerModule, MatInputModule, MatFormFieldModule,
     MatDatepickerModule, MatNativeDateModule, MatListModule,

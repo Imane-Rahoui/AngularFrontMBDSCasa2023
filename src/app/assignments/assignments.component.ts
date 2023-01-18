@@ -8,7 +8,6 @@ import { Assignment } from './assignment.model';
   styleUrls: ['./assignments.component.css'],
 })
 export class AssignmentsComponent implements OnInit {
-  formVisible = false;
   assignmentSelectionne?: Assignment = undefined;
   assignments: Assignment[] = [];
 
@@ -28,30 +27,5 @@ export class AssignmentsComponent implements OnInit {
   assignmentClique(a: Assignment) {
     console.log('On a cliqué sur :' + a.nom);
     this.assignmentSelectionne = a;
-  }
-
-  ajouterAssignment(a: Assignment) {
-    // On ajoute l'assignment envoyé par le fils
-    // dans le tableau des assignments
-    //this.assignments.push(a);
-    this.assignmentsService.addAssignment(a).subscribe((message) => {
-      console.log(message);
-
-      console.log("AJOUT EFFECTUE")
-
-      // On cache le formulaire et on affiche la liste. On le fait dans
-      // le subscribe pour être certain que la liste affichée soit à jour
-      this.formVisible = false;
-    });
-
-    console.log("AJOUT DEMANDE")
-  }
-
-  onDeleteAssignment(a: Assignment) {
-    // On supprime l'assignment envoyé par le fils du tableau
-    const pos = this.assignments.indexOf(a);
-    const nbElementsASupprimer = 1;
-
-    this.assignments.splice(pos, nbElementsASupprimer);
   }
 }

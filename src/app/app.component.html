@@ -1,4 +1,15 @@
-<h1>{{title}}</h1>
-<h2>Liste des devoirs</h2>
+<!--
+  Partie fixe
+-->
+<h1>
+  <nav>
+    <a routerLink="/home">
+      {{title}}
+    </a>
+  </nav>
+</h1>
 
-<app-assignments></app-assignments>
+<!--
+  Partie variable, change en fonction de l'URL et des routes
+-->
+<router-outlet></router-outlet>

@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AssignmentsService } from 'src/app/shared/assignments.service';
 import { Assignment } from '../assignment.model';
 
 @Component({
@@ -7,11 +9,12 @@ import { Assignment } from '../assignment.model';
   styleUrls: ['./add-assignment.component.css']
 })
 export class AddAssignmentComponent {
-  @Output() nouvelAssignment = new EventEmitter<Assignment>();
-
   // champs de formulaire
   nomDevoir="";
   dateDeRendu?:Date=undefined;
+
+  constructor(private assignmentsService: AssignmentsService,
+              private router:Router) { }
 
   onSubmit(event:any) {
     console.log(this.nomDevoir + " date de rendu : " + this.dateDeRendu);
@@ -22,9 +25,13 @@ export class AddAssignmentComponent {
     newAssignment.dateDeRendu = this.dateDeRendu;
     newAssignment.rendu = false;
 
-    //this.assignments.push(newAssignment);
-    // On emmet un événement vers le père.
-    // Cet événement a pour nom la variable du @Output()
-    this.nouvelAssignment.emit(newAssignment);
+    // On demande au service d'ajouter l'assignment à la BD
+    this.assignmentsService.addAssignment(newAssignment)
+    .subscribe((message) => {
+      console.log(message);
+
+      // et on navigue vers la page d'accueil
+      this.router.navigate(['/home']);
+    });
   }
 }

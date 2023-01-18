@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AssignmentsService } from 'src/app/shared/assignments.service';
 import { Assignment } from '../assignment.model';
 
@@ -7,11 +8,29 @@ import { Assignment } from '../assignment.model';
   templateUrl: './assignment-detail.component.html',
   styleUrls: ['./assignment-detail.component.css'],
 })
-export class AssignmentDetailComponent {
-  @Input() assignmentTransmis?: Assignment = undefined;
-  @Output() deleteAssignment = new EventEmitter<Assignment>();
+export class AssignmentDetailComponent implements OnInit {
+  assignmentTransmis?: Assignment = undefined;
 
-  constructor(private assignmentsService: AssignmentsService) {}
+  constructor(private assignmentsService: AssignmentsService,
+              private activatedRoute:ActivatedRoute) {}
+
+  ngOnInit() {
+    console.log('DETAILS AVANT AFFICHAGE');
+
+    // on récupère l'id dans l'URL (dans la route)
+    // Le '+' devant this.activatedRoute.snapshot.params['id']
+    // permet de convertir la valeur string en number
+    const id = +this.activatedRoute.snapshot.params['id'];
+    console.log("id = " + id);
+    console.log("type de id : " + typeof(id));
+
+    // On demande au service de gestion des assignments
+    // de nous fournir l'assignment correspondant à l'id
+    this.assignmentsService.getAssignment(id)
+    .subscribe((assignment) => {
+      this.assignmentTransmis = assignment;
+    });
+  }
 
   onAssignmentRendu() {
     if (!this.assignmentTransmis) return;
@@ -30,11 +49,15 @@ export class AssignmentDetailComponent {
     // On va envoyer un événement au parent
     if (!this.assignmentTransmis) return;
 
-    // On envoie un message au parent pour qu'il supprime l'assignment
-    // du tableau
-    this.deleteAssignment.emit(this.assignmentTransmis);
+    // On va demander au service de gestion des assignments de supprimer
+    // l'assignment courant
+    this.assignmentsService
+      .deleteAssignment(this.assignmentTransmis)
+      .subscribe((message) => {
+        console.log(message);
 
-    // on cache le détail de l'assignment (car il y a un *ngIf)
-    this.assignmentTransmis = undefined;
+        // on cache le détail de l'assignment (car il y a un *ngIf)
+        this.assignmentTransmis = undefined;
+      });
   }
 }
