@@ -13,7 +13,7 @@
       </mat-checkbox>
 
       <a routerLink="/assignments/{{assignmentTransmis.id}}/edit">
-        <button mat-raised-button color="primary">
+        <button mat-raised-button color="primary" [disabled]="!isAdmin()">
           EDIT
         </button>
       </a>
