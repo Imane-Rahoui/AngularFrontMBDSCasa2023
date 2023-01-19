@@ -19,7 +19,8 @@ export class AssignmentsComponent implements OnInit {
     // On va demander au service de gestion des assignments
     // de nous fournir la liste des assignments
     //this.assignments = this.assignmentsService.getAssignments();
-    this.assignmentsService.getAssignments().subscribe((assignments) => {
+    this.assignmentsService.getAssignments()
+    .subscribe((assignments) => {
       this.assignments = assignments;
     });
   }
