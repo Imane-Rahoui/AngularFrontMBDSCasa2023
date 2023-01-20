@@ -5,6 +5,88 @@
     </button>
   </a>
 
+  <p>Page courante : {{page}}, nbPages total : {{totalPages}}, nbDocuments : {{totalDocs}}
+  <br>
+    Nb de documents par page :
+    <input type="range" min="2" max="100" [(ngModel)]="limit"
+           (change)="getAssignments()"
+    > {{limit}}
+</p>
+
+  <div>
+    <button mat-raised-button color="primary" (click)="premierePage()"
+            [disabled]="!hasPrevPage"
+    >
+      Première
+    </button>
+    <button mat-raised-button color="primary" (click)="pagePrecedente()"
+            [disabled]="!hasPrevPage"
+    >
+      Précédente
+    </button>
+    <button mat-raised-button color="primary" (click)="pageSuivante()"
+            [disabled]="!hasNextPage"
+    >
+      Suivante
+    </button>
+    <button mat-raised-button color="primary" (click)="dernierePage()"
+            [disabled]="!hasNextPage"
+    >
+      Dernière
+    </button>
+  </div>
+
+  <table mat-table [dataSource]="assignments" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- colonne nom -->
+    <ng-container matColumnDef="nom">
+      <th mat-header-cell *matHeaderCellDef> Nom </th>
+      <td mat-cell *matCellDef="let a"> {{a.nom}} </td>
+    </ng-container>
+
+    <!-- colonne dateDeRendu -->
+    <ng-container matColumnDef="dateDeRendu">
+      <th mat-header-cell *matHeaderCellDef> Date de rendu </th>
+      <td mat-cell *matCellDef="let a"> {{a.dateDeRendu|date:'dd/MM/yyyy'}} </td>
+    </ng-container>
+
+    <!-- colonne rendu -->
+    <ng-container matColumnDef="rendu">
+      <th mat-header-cell *matHeaderCellDef> Rendu </th>
+      <td mat-cell *matCellDef="let a"> {{a.rendu}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+
+<p></p>
+<p></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Date de rendu</th>
+        <th>rendu</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let assignment of assignments">
+        <td>{{assignment.nom}}</td>
+        <td>{{assignment.dateDeRendu | date:'dd/MM/YYYY'}}</td>
+        <td>
+          <mat-checkbox [checked]="assignment.rendu" disabled></mat-checkbox>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p></p>
+  <p></p>
   <mat-list *ngFor="let assignment of assignments">
     <h3 matSubheader>Date de rendu : {{assignment.dateDeRendu | date:'dd/MM/YYYY'}}</h3>
 

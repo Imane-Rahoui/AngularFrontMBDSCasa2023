@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AssignmentsService } from './shared/assignments.service';
 import { AuthService } from './shared/auth.service';
 
 @Component({
@@ -11,7 +12,8 @@ export class AppComponent {
   title = 'Application de gestion de devoirs à rendre...';
 
   constructor(private authService:AuthService,
-              private router:Router) {}
+              private router:Router,
+              private assignmentsService:AssignmentsService) {}
 
   login() {
     if(this.authService.loggedIn) {
@@ -21,5 +23,17 @@ export class AppComponent {
     } else {
       this.authService.logIn();
     }
+  }
+
+  peuplerBD() {
+    // on appelle la méthode peuplerBD() du service
+    // de gestion des assignments
+    this.assignmentsService.peuplerBDavecForkJoin()
+    .subscribe(() => {
+      console.log("TOUTES LES DONNEES DE TEST ONT ETE AJOUTEES");
+
+      // et on affiche la liste à jour
+      this.router.navigate(['/home']);
+    })
   }
 }

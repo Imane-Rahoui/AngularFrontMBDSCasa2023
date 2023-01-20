@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { Assignment } from '../assignments/assignment.model';
 import { LoggingService } from './logging.service';
+
+import { bdInitialAssignments } from './data';
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +18,9 @@ export class AssignmentsService {
   URI = "http://localhost:8010/api/assignments";
   //URI = "https://g1back2023mbdscasa.herokuapp.com/api/assignments";
 
-  getAssignments():Observable<Assignment[]> {
+  getAssignmentsAvecPagination(page:number, limit:number):Observable<any> {
     // On envoie une requete HTTP GET pour recuperer les assignments
-    return this.http.get<Assignment[]>(this.URI);
-
-    //return of(this.assignments);
+    return this.http.get<Assignment[]>(this.URI + "?page=" + page + "&limit=" + limit);
   }
 
   // Un get assignment par id
@@ -56,5 +56,36 @@ export class AssignmentsService {
     this.loggingService.log(a.nom, "supprimé");
 
     return this.http.delete(this.URI + "/" + a._id);
+  }
+
+  peuplerBD() {
+    bdInitialAssignments.forEach((a) => {
+      let newAssignment = new Assignment();
+      newAssignment.nom = a.nom;
+      newAssignment.dateDeRendu = new Date(a.dateDeRendu);
+      newAssignment.rendu = a.rendu;
+
+
+      this.addAssignment(newAssignment)
+        .subscribe(reponse => {
+          console.log(reponse);
+        });
+    });
+  }
+
+  peuplerBDavecForkJoin():Observable<any> {
+    let appelsVersAddAssignment:Observable<any>[] = [];
+
+    bdInitialAssignments.forEach((a) => {
+      let newAssignment = new Assignment();
+      newAssignment.nom = a.nom;
+      newAssignment.dateDeRendu = new Date(a.dateDeRendu);
+      newAssignment.rendu = a.rendu;
+
+
+      appelsVersAddAssignment.push(this.addAssignment(newAssignment));
+    });
+
+    return forkJoin(appelsVersAddAssignment);
   }
 }

@@ -16,6 +16,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTableModule } from '@angular/material/table';
 
 import { AppComponent } from './app.component';
 import { AssignmentsComponent } from './assignments/assignments.component';
@@ -53,6 +54,7 @@ const routes: Route[] = [
     MatDividerModule, MatInputModule, MatFormFieldModule,
     MatDatepickerModule, MatNativeDateModule, MatListModule,
     MatCardModule, MatCheckboxModule, MatSlideToggleModule,
+    MatTableModule,
     HttpClientModule
   ],
   providers: [],
