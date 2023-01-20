@@ -71,4 +71,12 @@ export class AssignmentsComponent implements OnInit {
     this.page = 1;
     this.getAssignments();
   }
+
+  paginator(event: any) {
+    console.log(event);
+    this.page = event.pageIndex+1;
+    this.limit = event.pageSize;
+
+    this.getAssignments();
+  }
 }

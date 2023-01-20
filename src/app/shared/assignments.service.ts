@@ -15,8 +15,8 @@ export class AssignmentsService {
 
   assignments:Assignment[] = [];
 
-  URI = "http://localhost:8010/api/assignments";
-  //URI = "https://g1back2023mbdscasa.herokuapp.com/api/assignments";
+  //URI = "http://localhost:8010/api/assignments";
+  URI = "https://g1back2023mbdscasa.herokuapp.com/api/assignments";
 
   getAssignmentsAvecPagination(page:number, limit:number):Observable<any> {
     // On envoie une requete HTTP GET pour recuperer les assignments

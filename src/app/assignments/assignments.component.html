@@ -37,10 +37,6 @@
   </div>
 
   <table mat-table [dataSource]="assignments" class="mat-elevation-z8">
-
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-
     <!-- colonne nom -->
     <ng-container matColumnDef="nom">
       <th mat-header-cell *matHeaderCellDef> Nom </th>
@@ -62,6 +58,14 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+
+    <mat-paginator
+        [length]="totalPages"
+        [pageSize]="limit"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        (page)="paginator($event)"
+    >
+  </mat-paginator>
 
 
 <p></p>
